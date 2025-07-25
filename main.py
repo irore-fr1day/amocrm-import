@@ -47,6 +47,8 @@ async def process(request: Request):
     ]
 
     filtered = df[[col for col in keep if col in df.columns]]
+    filtered = filtered.fillna("")  # 🔥 ВАЖНО: заменяем NaN на ""
+    
     values = [filtered.columns.tolist()] + filtered.values.tolist()
 
     # очищаем и записываем
