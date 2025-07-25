@@ -31,9 +31,13 @@ async def process(request: Request):
     file_data = BytesIO(r.content)
 
     try:
-        df = pd.read_excel(file_data)
-    except:
-        return {"error": "не удалось прочитать файл"}
+        df = pd.read_excel(file_data, engine="openpyxl")
+    except Exception as e:
+        return {
+            "error": "не удалось прочитать файл",
+            "details": str(e)
+    }
+
 
     keep = [
         "Этап", "Курс учащегося", "Рабочий email (контакт)",
